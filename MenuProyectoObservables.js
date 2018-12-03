@@ -4,7 +4,7 @@ const fs = require('fs');
 const rxjs = require('rxjs');
 const mergeMap = require('rxjs/operators').mergeMap;
 const map = require('rxjs/operators').map;
-//const switchMap = require('rxjs/operators').switchMap;
+const switchMap = require('rxjs/operators').switchMap;
 
 const menuPrincipal =
     {
@@ -56,7 +56,7 @@ const preguntaEliminarEquipo = [
 
 const preguntaNuevoCostoEquipo = [
     {
-        name: 'costoReparacion',|
+        name: 'costoReparacion',
         type: 'input',
         message: "Cual es el id del Equipo a que desea actualizar?"
     }
@@ -86,13 +86,13 @@ function main() {
         )
 }
 
-
+/*
 function inicializarBase() {
     const bddLeida$ = rxjs.from(leerDBB());
     return bddLeida$
         .pipe(
             mergeMap( //Respuesta Anterior Observable
-                (respuestaBDD: RespuestaLeerBDD) => {
+                (respuestaBDD:RespuestaLeerBDD) => {
                     if (respuestaBDD.bdd) {
                         return rxjs
                             .of(respuestaBDD);
@@ -104,15 +104,39 @@ function inicializarBase() {
                     }
                 }
             ),
+        ),
+};
+*/
+
+function inicializarBase() {
+
+    const bddLeida$ = rxjs.from(leerBDD());
+
+    return bddLeida$
+        .pipe(
+            mergeMap(  // Respuesta anterior Observable
+                (respuestaBDD: RespuestaLeerBDD) => {
+                    if (respuestaBDD.bdd) {
+                        return rxjs
+                            .of(respuestaBDD);
+                    } else {
+                        // crear la base
+
+                        return rxjs
+                            .from(crearBDD());
+                    }
+
+                }
+            ),
         );
 }
-
 function leerDBB() {
     return new Promise(
         (resolve) => {
-            fs.readFile('data.json', 'utf-8',
+            fs.readFile('bdd.json', 'utf-8',
                 (error, contenido) => {
                     if (error) {
+                        console.log('base')
                         resolve({
                             mensaje: 'Error al abrir la base de datos',
                             bdd: null
@@ -131,12 +155,12 @@ function leerDBB() {
 }
 
 function crearBDD() {
-    //= '{"banquetes":[]}';
+
     const contenido = '{"reparacion":[]}';
     return new Promise(
         (resolve, reject) => {
             fs.writeFile(
-                'data.json',
+                'bdd.json',
                 contenido,
                 (error) => {
                     if (error) {
@@ -159,7 +183,7 @@ function crearBDD() {
 function guardarBDD(bdd: BaseDeDatos) {
     return new Promise(
         (resolve, reject) => {
-            fs.writeFile('data.json',
+            fs.writeFile('bdd.json',
                 JSON.stringify(bdd),
                 (error) => {
                     if (error) {
@@ -207,7 +231,7 @@ interface RespuestaLeerBDD {
 }
 
 interface BaseDeDatos {
-    banquetes: Equipo[] | any;
+    reparacion: Equipo[] | any;
 }
 
 interface Equipo{
@@ -233,20 +257,20 @@ function preguntarDatos() {
                         .from(inquirer.prompt(preguntaIngresoEquipo))
                         .pipe(
                             map(
-                                (banquete: Banquete) => {
-                                    respuesta.banquete = banquete;
+                                (equipo: Equipo) => {
+                                    respuesta.equipo = equipo;
                                     return respuesta;
                                 }
                             )
                         );
-                case 'Buscar Banquetes':
-                    return preguntarNombreBanqueteBuscar(respuesta);
-                case 'Actualizar Banquete':
-                    return preguntarNombreBanquete(respuesta);
-                case 'Eliminar Banquete':
-                    return eliminarBanquetePorNombre(respuesta);
+                case 'Buscar Equipo':
+                    return preguntarNombreEquipoBuscar(respuesta);
+                case 'Actualizar Equipo':
+                    return preguntarNombreEquipo(respuesta);
+                case 'Eliminar Equipo':
+                    return eliminarEquipoPorNombre(respuesta);
                     break;
-                case 'Ver Banquetes':
+                case 'Ver Equipo':
 
                     break;
             }
@@ -260,25 +284,25 @@ function ejecutarAccion() {
         (respuesta: RespuestaLeerBDD) => {
             const opcion = respuesta.opcionesdelMenu.opcionesdelMenu;
             switch (opcion) {
-                case 'Ingresar nuevo Banquete':
-                    respuesta.bdd.banquetes.push(respuesta.banquete);
+                case 'Ingresar nuevo Equipoe':
+                    respuesta.bdd.reparacion.push(respuesta.equipo);
                     return respuesta;
                     break;
-                case 'Buscar Banquetes':
-                    const indic = respuesta.indiceBanquete;
-                    console.log('respuesta.bdd.banquetes[in]', respuesta.bdd.banquetes[indic]);
+                case 'Buscar Equipo':
+                    const indic = respuesta.indiceEquipo;
+                    console.log('respuesta.bdd.reparacion[in]', respuesta.bdd.reparacion[indic]);
                     return respuesta;
 
-                case 'Actualizar Banquete':
-                    const indice = respuesta.indiceBanquete;
-                    respuesta.bdd.banquetes[indice].costoBanquete = respuesta.banquete.costoBanquete;
+                case 'Actualizar Equipo':
+                    const indice = respuesta.indiceEquipo;
+                    respuesta.bdd.reparacion[indice].costoReparacion = respuesta.reparacion.costoReparacion;
                     return respuesta;
                     break;
-                case 'Eliminar Banquete':
-                    respuesta.bdd.banquetes.splice(respuesta.indiceBanquete,respuesta.indiceBanquete);
+                case 'Eliminar Equipo':
+                    respuesta.bdd.reparacion.splice(respuesta.indiceEquipo,respuesta.indiceEquipo);
                     return respuesta;
                     break;
-                case 'Ver Banquetes':
+                case 'Ver Equipo':
                     break;
             }
         }
@@ -294,32 +318,32 @@ function actualizarBDD() {
     )
 }
 
-function preguntarNombreBanquete(respuesta: RespuestaLeerBDD) {
+function preguntarNombreEquipo(respuesta: RespuestaLeerBDD) {
     return rxjs
         .from(inquirer.prompt(preguntaBuscarEquipo))
         .pipe(
             mergeMap(
-                (resultado: BuscarBanqueteNombre) => {
-                    const indiceBanquete = respuesta.bdd.banquetes
+                (resultado: BuscarEquipoNombre) => {
+                    const indiceEquipo = respuesta.bdd.reparacion
                         .findIndex(
-                            (banquete: any) => {
-                                return banquete.nombreBanquete === resultado.nombreBanquete;
+                            (equipo: any) => {
+                                return equipo.nombreEquipo === resultado.nombreEquipo;
                             });
-                    console.log(respuesta.bdd.banquetes);
-                    console.log(indiceBanquete);
-                    if (indiceBanquete === -1) {
-                        console.log('Lo sentimos ese Banquete no existe, vuelva intentarlo');
-                        return preguntarNombreBanquete(respuesta);
+                    console.log(respuesta.bdd.reparacion);
+                    console.log(indiceEquipo);
+                    if (indiceEquipo === -1) {
+                        console.log('Lo sentimos ese Equipo no existe, vuelva intentarlo');
+                        return preguntarNombreEquipo(respuesta);
                     } else {
-                        respuesta.indiceBanquete = indiceBanquete;
+                        respuesta.indiceEquipo = indiceEquipo;
                         return rxjs
                             .from(inquirer.prompt(preguntaNuevoCostoEquipo))
                             .pipe(
                                 map(
-                                    (costoBanquete: { costoBanquete: number }) => {
-                                        respuesta.banquete = {
-                                            nombreBanquete: null,
-                                            costoBanquete: costoBanquete.costoBanquete
+                                    (costoReparacion: { costoReparacion: number }) => {
+                                        respuesta.equipo = {
+                                            nombreEquipo: null,
+                                            costoReparacion: costoReparacion.costoReparacion
                                         };
                                         return respuesta;
                                     }
@@ -332,24 +356,24 @@ function preguntarNombreBanquete(respuesta: RespuestaLeerBDD) {
 }
 
 
-function preguntarNombreBanqueteBuscar(respuesta: RespuestaLeerBDD) {
+function preguntarNombreEquipoBuscar(respuesta: RespuestaLeerBDD) {
     return rxjs
         .from(inquirer.prompt(preguntaBuscarEquipo))
         .pipe(
             mergeMap(
-                (resultado: BuscarBanqueteNombre) => {
-                    const indiceBanquete = respuesta.bdd.banquetes
+                (resultado: BuscarEquipoNombre) => {
+                    const indiceEquipo = respuesta.bdd.reparacion
                         .findIndex(
-                            (banquete: any) => {
-                                return banquete.nombreBanquete === resultado.nombreBanquete;
+                            (equipo: any) => {
+                                return equipo.nombreEquipo === resultado.nombreEquipo;
                             });
-                    //console.log(respuesta.bdd.banquetes);
-                    console.log(indiceBanquete);
-                    if (indiceBanquete === -1) {
-                        console.log('Lo sentimos ese Banquete no existe, vuelva intentarlo');
-                        //preguntarNombreBanqueteBuscar(respuesta);
+
+                    console.log(indiceEquipo);
+                    if (indiceEquipo === -1) {
+                        console.log('Lo sentimos ese Equipo no existe, vuelva intentarlo');
+
                     } else {
-                        respuesta.indiceBanquete = indiceBanquete;
+                        respuesta.indiceEquipo = indiceEquipo;
                         return rxjs.of(respuesta);
                     }
                 }
@@ -358,24 +382,24 @@ function preguntarNombreBanqueteBuscar(respuesta: RespuestaLeerBDD) {
 }
 
 
-function eliminarBanquetePorNombre(respuesta: RespuestaLeerBDD) {
+function eliminarEquipoPorNombre(respuesta: RespuestaLeerBDD) {
     return rxjs
         .from(inquirer.prompt(preguntaEliminarEquipo))
         .pipe(
             mergeMap(
-                (resultado: BuscarBanqueteNombre) => {
-                    const indiceBanquete = respuesta.bdd.banquetes
+                (resultado: BuscarEquipoNombre) => {
+                    const indiceEquipo = respuesta.bdd.reparacion
                         .findIndex(
-                            (banquete: any) => {
-                                return banquete.nombreBanquete === resultado.nombreBanquete;
+                            (equipo: any) => {
+                                return equipo.nombreEquipo === resultado.nombreEquipo;
                             });
-                    console.log(indiceBanquete);
-                    if (indiceBanquete === -1) {
-                        console.log('Lo sentimos ese Banquete no existe, vuelva intentarlo');
-                        return preguntarNombreBanquete(respuesta);
+                    console.log(indiceEquipo);
+                    if (indiceEquipo === -1) {
+                        console.log('Lo sentimos ese Equipo no existe, vuelva intentarlo');
+                        return preguntarNombreEquipo(respuesta);
                     } else {
-                        console.log("El banquete fue eliminado correctamente");
-                        respuesta.indiceBanquete = indiceBanquete;
+                        console.log("El Equipo fue eliminado correctamente");
+                        respuesta.indiceEquipo = indiceEquipo;
                         return rxjs.of(respuesta);
                     }
                 }
