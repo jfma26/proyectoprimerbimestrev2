@@ -21,11 +21,11 @@ const menuPrincipal =
     };
 
 const preguntaIngresoEquipo = [
-    {
+  /*  {
         type: 'input',
         name: 'idEquipo',
         message: "Cual es el id del Equipo a ingresar ?"
-    },
+    },*/
     {
         type: 'input',
         name: 'nombreEquipo',
@@ -130,29 +130,30 @@ function inicializarBase() {
             ),
         );
 }
-function leerDBB() {
+function leerBDD() {
     return new Promise(
         (resolve) => {
-            fs.readFile('bdd.json', 'utf-8',
-                (error, contenido) => {
+            fs.readFile(
+                'bdd.json',
+                'utf-8',
+                (error, contenidoArchivo) => {
                     if (error) {
-                        console.log('base')
                         resolve({
-                            mensaje: 'Error al abrir la base de datos',
+                            mensaje: 'No existe la Base de Datos',
                             bdd: null
                         });
                     } else {
                         resolve({
-                            mensaje: 'Base leida correctamente',
-                            bdd: JSON.parse(contenido)
+                            mensaje: 'Base de datos leida',
+                            bdd: JSON.parse(contenidoArchivo)
                         });
                     }
                 }
             );
-
         }
     );
 }
+
 
 function crearBDD() {
 
@@ -224,10 +225,10 @@ function preguntarOpcionesMenu() {
 
 interface RespuestaLeerBDD {
     mensaje: string;
-    data?: BaseDeDatos;
+    bdd?: BaseDeDatos;
     opcionesdelMenu?: OpcionesDelMenu;
     equipo?: Equipo;
-    indiceequipo?: number;
+ //   indiceequipo?: number;
 }
 
 interface BaseDeDatos {

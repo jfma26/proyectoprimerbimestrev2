@@ -22,6 +22,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitattributes" value="1" />
+          <entry key="gitignore" value="1" />
           <entry key="js" value="5" />
           <entry key="json" value="3" />
           <entry key="ts" value="3" />
@@ -31,7 +32,7 @@
         <counts>
           <entry key="JSON" value="3" />
           <entry key="JavaScript" value="5" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="2" />
           <entry key="TypeScript" value="3" />
         </counts>
       </usages-collector>
@@ -42,12 +43,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="578" />
+          <entry key="js" value="603" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="578" />
+          <entry key="JavaScript" value="603" />
         </counts>
       </usages-collector>
     </session>
@@ -57,8 +58,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MenuProyectoObservables.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="196" column="22" selection-start-line="196" selection-start-column="22" selection-end-line="196" selection-end-column="22" />
+            <state relative-caret-position="677">
+              <caret line="249" lean-forward="true" selection-start-line="249" selection-end-line="249" />
               <folding>
                 <element signature="n#!!block;n#inicializarBase#0" />
               </folding>
@@ -88,6 +89,7 @@
       <find>dbb</find>
       <find>.json</find>
       <find>data</find>
+      <find>RespuestaLeerBDD</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -98,8 +100,8 @@
       <list>
         <option value="$PROJECT_DIR$/MenuProyectoObservables.ts" />
         <option value="$PROJECT_DIR$/prueba.ts" />
-        <option value="$PROJECT_DIR$/MenuProyectoObservables.js" />
         <option value="$PROJECT_DIR$/prueba.js" />
+        <option value="$PROJECT_DIR$/MenuProyectoObservables.js" />
       </list>
     </option>
   </component>
@@ -145,6 +147,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.2.4\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jfma2\WebstormProjects\proyectobimestreI\proyectoprimerbimestre" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -157,7 +164,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.prueba.js">
+  <component name="RunManager" selected="Node.js.MenuProyectoObservables.js">
     <configuration name="MenuProyectoObservables.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="MenuProyectoObservables.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
@@ -170,8 +177,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.prueba.js" />
         <item itemvalue="Node.js.MenuProyectoObservables.js" />
+        <item itemvalue="Node.js.prueba.js" />
       </list>
     </recent_temporary>
   </component>
@@ -185,19 +192,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1543846390174</updated>
-      <workItem from="1543846392782" duration="9721000" />
+      <workItem from="1543846392782" duration="10552000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9721000" />
+    <option name="totallyTimeSpent" value="10552000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="TypeScript" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -206,7 +213,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2733189" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2733189" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -261,10 +268,13 @@
     <entry file="file://$PROJECT_DIR$/dbb.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/MenuProyectoObservables.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="196" column="22" selection-start-line="196" selection-start-column="22" selection-end-line="196" selection-end-column="22" />
+        <state relative-caret-position="677">
+          <caret line="249" lean-forward="true" selection-start-line="249" selection-end-line="249" />
           <folding>
             <element signature="n#!!block;n#inicializarBase#0" />
           </folding>
